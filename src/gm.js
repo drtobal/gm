@@ -1,1 +1,1 @@
-import { double, square } from 'lib/test';
+gm = new Object();
