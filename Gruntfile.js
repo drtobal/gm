@@ -3,8 +3,9 @@
  * carpeta ./dist
  * 
  * requiere los siguientes paquetes de grunt:
- * npm install grunt grunt-contrib-uglifyjs --save-dev
+ * npm install grunt grunt-contrib-uglify --save-dev
  * npm install grunt-concat-deps --save-dev
+ * npm install grunt-jsdoc@beta --save-dev
  */
 
 module.exports = function (grunt) {
@@ -39,10 +40,19 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        jsdoc: {
+            dist: {
+                src: ['src/*.js', 'test/*.js'],
+                options: {
+                    destination: 'doc'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-concat-deps");
-    grunt.registerTask("default", ["uglify", "concat_deps"]);
+    grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.registerTask("default", ["uglify", "concat_deps", "jsdoc"]);
 };
