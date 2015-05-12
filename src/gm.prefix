@@ -1,1 +1,7 @@
-(function(window, document, undefined) {
+/**
+* @author       Richard Davey <cristobal@cirstobaldiaz.cl>
+*/
+
+(function(){
+
+    var root = this;

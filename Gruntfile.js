@@ -8,6 +8,14 @@
  * npm install grunt-jsdoc@beta --save-dev
  */
 
+var archivos = [
+    "src/gm.prefix",
+    "src/gm.js",
+    "src/*/*.js",
+    "src/*.js",
+    "src/gm.suffix",
+];
+
 module.exports = function (grunt) {
     grunt.initConfig({
         uglify: {
@@ -15,13 +23,15 @@ module.exports = function (grunt) {
                 options: {
                     sourceMap: true,
                     sourceMapName: "dist/gm.min.map",
-                    wrap: "gm",
+                    banner: "(function(){\nvar root = this;\n",
+                    footer: "\nGm = GM;\n}).call(this);",
                 },
                 files: {
                     "dist/gm.min.js": [
                         "src/gm.js",
+                        "src/*/*.js",
                         "src/*.js",
-                    ]
+                    ],
                 }
             }
         },
@@ -29,24 +39,19 @@ module.exports = function (grunt) {
             main: {
                 options: {
                     separator: "\n\n",
-                    intro: "src/gm.prefix",
-                    outro: "src/gm.suffix",
                     out: "dist/gm.js",
                 },
                 files: {
-                    src: [
-                        "src/gm.js",
-                        "src/*.js",
-                    ]
+                    src: archivos,
                 }
             }
         },
         jsdoc: {
             dist: {
-                src: ['src/*.js', 'test/*.js'],
+                src: archivos,
                 options: {
-                    destination: 'doc'
-                }
+                    destination: 'doc',
+                },
             }
         }
     });
@@ -55,4 +60,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-concat-deps");
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.registerTask("default", ["uglify", "concat_deps", "jsdoc"]);
+    grunt.registerTask("dist", ["uglify", "concat_deps"]);
+    grunt.registerTask("jsdoc", ["jsdoc"]);
 };
