@@ -1,5 +1,5 @@
 /**
- * En el objeto frame se manejan los frames que requiere la aplicación
+ * En el objeto Frame se manejan los frames que requiere la aplicación
  * para renderizar cada cuadro de la aplicación
  * @memberOf GM
  * @class Frame

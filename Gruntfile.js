@@ -59,7 +59,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-concat-deps");
     grunt.loadNpmTasks('grunt-jsdoc');
+    
     grunt.registerTask("default", ["uglify", "concat_deps", "jsdoc"]);
     grunt.registerTask("dist", ["uglify", "concat_deps"]);
-    grunt.registerTask("jsdoc", ["jsdoc"]);
+    grunt.registerTask("doc", ["jsdoc"]);
 };
