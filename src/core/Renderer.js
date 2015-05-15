@@ -11,7 +11,7 @@ GM.Renderer = new function () {
      * @property {THREE.WebGLRenderer} renderer objeto de renderizado principal de la aplicación
      * @property {object} config Configuración para renderer
      */
-    this.renderer = null;
+    this.renderer;
     this.config = {
         shadowMapEnabled: true,
         antialias: true,

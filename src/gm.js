@@ -11,21 +11,26 @@
 
 var GM = new function () {
 
-    var root = this;
-    
+    var me = this;
+
     /**
      * @property {THREE.Scene} scene Objeto con la scena de Three.js
+     * @property {Object} config Define configuraciones generales de la aplicación
      */
     this.scene = null;
+    this.config = {
+        debug: false
+    };
 
     /**
      * función que comienza a correr la aplicación, debe ser llamada luego de realizar todas las configuraciones para iniciar
      * @method GM.start
      */
     this.start = function () {
-        root.Renderer.build();
-        GM.scene = new THREE.Scene();
-        window.requestAnimFrame = root.Frame.requestAnimFrame();
+        me.Renderer.build();
+        me.scene = new THREE.Scene();
+        me.Camera.build();
+        window.requestAnimFrame = me.Frame.requestAnimFrame();
     };
 
 };
