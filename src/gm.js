@@ -27,10 +27,15 @@ var GM = new function () {
      * @method GM.start
      */
     this.start = function () {
-        me.Renderer.build();
         me.scene = new THREE.Scene();
+        me.Renderer.build();
         me.Camera.build();
-        window.requestAnimFrame = me.Frame.requestAnimFrame();
+        me.Canvas.build();
+        me.Frame.build();
+        requestAnimFrame(function animate() {
+            requestAnimationFrame(animate);
+            me.Renderer.render();
+        });
     };
 
 };

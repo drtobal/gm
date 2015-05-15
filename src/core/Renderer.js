@@ -37,4 +37,12 @@ GM.Renderer = new function () {
             me.renderer.shadowMapType = THREE.PCFSoftShadowMap;
         }
     };
+
+    /**
+     * Renderiza el cuadro actual
+     * @method GM.Renderer.render
+     */
+    this.render = function () {
+        me.renderer.render(GM.scene, GM.Camera.camera);
+    };
 };
