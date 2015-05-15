@@ -28,14 +28,16 @@ GM.Camera = new function () {
         me.camera.rotation.order = 'YXZ';
         me.camera.rotation.y = -Math.PI / 4;
         me.camera.rotation.x = Math.atan(-1 / Math.sqrt(2));
+        buildControls();
     };
 
     /**
      * Crea los controles que definirán el comportamiento de la cámara en la
      * aplicación
      * @method GM.Camera.buildControls
+     * @private
      */
-    this.buildControls = function () {
+    var buildControls = function () {
         me.controls = new THREE.OrbitControls(me.camera, GM.Renderer.renderer.domElement);
         me.controls.addEventListener("change", GM.Renderer.render);
         me.controls.noZoom = false;

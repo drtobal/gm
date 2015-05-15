@@ -2,7 +2,9 @@
  * Clase principal generada y disponible en el entorno global instanciada como
  * Gm
  * 
- * Requiere Three.js
+ * Requiere
+ * Three.js
+ * OrbitControls.js
  * 
  * @author Cristóbal Díaz Álvarez <http://www.cristobaldiazalvarez.cl>
  * @class GM
