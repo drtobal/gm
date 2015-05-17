@@ -10,6 +10,7 @@
 
 var archivos = [
     "src/gm.prefix",
+    "src/utils/*.js",
     "src/gm.js",
     "src/*/*.js",
     "src/*.js",
@@ -28,6 +29,7 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "dist/gm.min.js": [
+                        "src/utils/*.js",
                         "src/gm.js",
                         "src/*/*.js",
                         "src/*.js",

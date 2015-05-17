@@ -17,11 +17,13 @@ var GM = new function () {
     /**
      * @property {THREE.Scene} scene Objeto con la scena de Three.js
      * @property {Object} config Define configuraciones generales de la aplicación
+     * @property {Collection} beforeStart colección de funciones que se ejecutan antes de comenzar la aplicación
      */
     this.scene = null;
     this.config = {
         debug: false
     };
+    this.beforeStart = new Collection();
 
     /**
      * función que comienza a correr la aplicación, debe ser llamada luego de realizar todas las configuraciones para iniciar
@@ -33,14 +35,18 @@ var GM = new function () {
         me.Camera.build();
         me.Canvas.build();
         me.Frame.build();
+
+        me.beforeStart.getCollection().forEach(function (item) {
+            item.value();
+        });
+
         me.Renderer.onWindowResize();
-        
+        window.addEventListener('resize', me.Renderer.onWindowResize, false);
+
         requestAnimFrame(function animate() {
             requestAnimationFrame(animate);
             me.Renderer.render();
         });
-        
-        window.addEventListener('resize', me.Renderer.onWindowResize, false);
     };
 
 };
