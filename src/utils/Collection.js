@@ -9,6 +9,7 @@ var Collection = function () {
     /**
      * Agrega un objeto a la colección
      * @method Collection.add
+     * @memberOf Collection
      * @param {string} key identificador del objeto, null para autogenerar
      * @param {type} value objeto que se quiere agregar
      * @returns {object} objeto que se ha agregado a la colección
@@ -26,7 +27,9 @@ var Collection = function () {
     };
 
     /**
-     * 
+     * Retorna el array con la colección
+     * @method Collection.getCollection
+     * @memberOf Collection
      * @returns {Array|Collection.collection}
      */
     this.getCollection = function () {
