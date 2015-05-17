@@ -1,6 +1,5 @@
 /**
- * Clase principal generada y disponible en el entorno global instanciada como
- * Gm
+ * Clase principal generada y disponible en el entorno global instanciada como Gm
  * 
  * Requiere
  * Three.js
@@ -34,10 +33,14 @@ var GM = new function () {
         me.Camera.build();
         me.Canvas.build();
         me.Frame.build();
+        me.Renderer.onWindowResize();
+        
         requestAnimFrame(function animate() {
             requestAnimationFrame(animate);
             me.Renderer.render();
         });
+        
+        window.addEventListener('resize', me.Renderer.onWindowResize, false);
     };
 
 };

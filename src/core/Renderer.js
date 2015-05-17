@@ -39,6 +39,26 @@ GM.Renderer = new function () {
     };
 
     /**
+     * Actualiza el tamaño y proporciones del nodo canvas de la aplicación cuando se ajusta el tamaño de la ventana
+     * @method GM.Renderer.onWindowResize
+     */
+    this.onWindowResize = function () {
+        var width, height;
+        if ((window.innerWidth / 16) < (window.innerHeight / 9)) {
+            width = window.innerWidth;
+            height = (width / 16) * 9;
+        } else {
+            height = window.innerHeight;
+            width = (height / 9) * 16;
+        }
+        GM.Canvas.node.style.width = width + "px";
+        GM.Canvas.node.style.height = height + "px";
+        me.renderer.setSize(width, height);
+        GM.Camera.camera.updateProjectionMatrix();
+        me.render();
+    };
+
+    /**
      * Renderiza el cuadro actual
      * @method GM.Renderer.render
      */
