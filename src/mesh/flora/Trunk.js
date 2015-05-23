@@ -1,12 +1,12 @@
 /**
  * Crea un tronco
- * @memberOf Mesh.Flora.Trunk
+ * @memberOf Mesh.Flora
  * @class Trunk
  */
 Mesh.Flora.Trunk = new function () {
     /**
      * Crea un tronco base
-     * @method GM.Flora.Trunk.base
+     * @method Mesh.Flora.Trunk.base
      * @param {THREE.Geometry} geometry geometría del objeto
      * @returns {THREE.Mesh}
      */
@@ -36,7 +36,7 @@ Mesh.Flora.Trunk = new function () {
     
     /**
      * Crea un tronco vertical
-     * @method GM.Flora.Trunk.vertical
+     * @method Mesh.Flora.Trunk.vertical
      * @param {THREE.Geometry} geometry geometría del objeto
      * @returns {THREE.Mesh}
      */
@@ -74,7 +74,7 @@ Mesh.Flora.Trunk = new function () {
     
     /**
      * Crea un tronco horizontal
-     * @method GM.Flora.Trunk.horizontal
+     * @method Mesh.Flora.Trunk.horizontal
      * @param {THREE.Geometry} geometry geometría del objeto
      * @returns {THREE.Mesh}
      */
