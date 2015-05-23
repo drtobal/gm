@@ -8,16 +8,26 @@
  * npm install grunt-jsdoc@beta --save-dev
  */
 
-var archivos = [
-    "src/gm.prefix",
-    "src/utils/*.js",
-    "src/gm.js",
-    "src/*/*.js",
-    "src/*.js",
-    "src/gm.suffix",
-];
-
 module.exports = function (grunt) {
+
+    var archivos = [
+        "src/utils/*.js",
+        "src/gm.js",
+        "src/*.js",
+        "src/*/*.js",
+        "src/*/*/*.js",
+    ];
+
+    var archivosB = [
+        "src/gm.prefix",
+        "src/utils/*.js",
+        "src/gm.js",
+        "src/*.js",
+        "src/*/*.js",
+        "src/*/*/*.js",
+        "src/gm.suffix",
+    ];
+
     grunt.initConfig({
         uglify: {
             main: {
@@ -25,15 +35,10 @@ module.exports = function (grunt) {
                     sourceMap: true,
                     sourceMapName: "dist/gm.min.map",
                     banner: "(function(){\nvar root = this;\n",
-                    footer: "\nGm = GM;\n}).call(this);",
+                    footer: "}).call(this);",
                 },
                 files: {
-                    "dist/gm.min.js": [
-                        "src/utils/*.js",
-                        "src/gm.js",
-                        "src/*/*.js",
-                        "src/*.js",
-                    ],
+                    "dist/gm.min.js": archivos,
                 }
             }
         },
@@ -44,13 +49,13 @@ module.exports = function (grunt) {
                     out: "dist/gm.js",
                 },
                 files: {
-                    src: archivos,
+                    src: archivosB,
                 }
             }
         },
         jsdoc: {
             dist: {
-                src: archivos,
+                src: archivosB,
                 options: {
                     destination: 'doc',
                 },
@@ -61,7 +66,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-concat-deps");
     grunt.loadNpmTasks('grunt-jsdoc');
-    
+
     grunt.registerTask("default", ["uglify", "concat_deps", "jsdoc"]);
     grunt.registerTask("dist", ["uglify", "concat_deps"]);
     grunt.registerTask("doc", ["jsdoc"]);

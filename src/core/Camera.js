@@ -20,7 +20,7 @@ GM.Camera = new function () {
     /**
      * Creación de la cámara para el juego, este método es utilizado al momento
      * de iniciar la aplicación en GM.start()
-     * @method GM.Camera.Build 
+     * @method GM.Camera.build 
      */
     this.build = function () {
         me.camera = new THREE.PerspectiveCamera(45, 16 / 9, 1, 1000);

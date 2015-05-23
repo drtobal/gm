@@ -18,12 +18,15 @@ var GM = new function () {
      * @property {THREE.Scene} scene Objeto con la scena de Three.js
      * @property {Object} config Define configuraciones generales de la aplicación
      * @property {Collection} beforeStart colección de funciones que se ejecutan antes de comenzar la aplicación
+     * @property {function} blank función vacía 
      */
     this.scene = null;
     this.config = {
         debug: false
     };
     this.beforeStart = new Collection();
+    this.blank = function () {
+    };
 
     /**
      * función que comienza a correr la aplicación, debe ser llamada luego de realizar todas las configuraciones para iniciar
@@ -40,6 +43,9 @@ var GM = new function () {
             item.value();
         });
 
+        me.Mesh = Mesh;
+        me.World.create(me.scene, Mesh);
+
         me.Renderer.onWindowResize();
         window.addEventListener('resize', me.Renderer.onWindowResize, false);
 
@@ -54,3 +60,32 @@ var GM = new function () {
 if (typeof THREE === 'undefined') {
     throw new Error('GM requiere Three.js')
 }
+
+/**
+ * Clase públic de GM
+ * @class Gm
+ */
+Gm = new function () {
+
+    this.Mesh = Mesh;
+
+    /**
+     * Llama a GM.start
+     * @method Gm.start
+     */
+    this.start = function () {
+        GM.start();
+    };
+
+    /**
+     * Define la variable GM.World.createWorld
+     * @param {function} fun función para crear el mundo, los parámetros que se le insertan son:
+     * {THREE.scene} scene escena del juego
+     * @method Gm.world
+     */
+    this.world = function (fun) {
+        GM.World.createWorld = fun;
+    };
+};
+
+Gm = GM;
