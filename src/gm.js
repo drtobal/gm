@@ -36,7 +36,6 @@ var GM = new function () {
         me.scene = new THREE.Scene();
         me.Renderer.build();
         me.Camera.build();
-        me.Canvas.build();
         me.Frame.build();
 
         me.beforeStart.getCollection().forEach(function (item) {
@@ -60,32 +59,5 @@ var GM = new function () {
 if (typeof THREE === 'undefined') {
     throw new Error('GM requiere Three.js')
 }
-
-/**
- * Clase públic de GM
- * @class Gm
- */
-Gm = new function () {
-
-    this.Mesh = Mesh;
-
-    /**
-     * Llama a GM.start
-     * @method Gm.start
-     */
-    this.start = function () {
-        GM.start();
-    };
-
-    /**
-     * Define la variable GM.World.createWorld
-     * @param {function} fun función para crear el mundo, los parámetros que se le insertan son:
-     * {THREE.scene} scene escena del juego
-     * @method Gm.world
-     */
-    this.world = function (fun) {
-        GM.World.createWorld = fun;
-    };
-};
 
 Gm = GM;

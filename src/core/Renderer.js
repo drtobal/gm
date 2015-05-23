@@ -13,12 +13,12 @@ GM.Renderer = new function () {
      */
     this.renderer;
     this.config = {
-        shadowMapEnabled: true,
-        antialias: true,
-        alpha: true,
+        shadowMapEnabled: false,
+        antialias: false,
+        alpha: false,
         devicePixelRatio: 1,
-        setClearColor: 0x7EB3E5,
-        softShadows: true,
+        clearColor: 0x7EB3E5,
+        softShadows: false,
     };
 
     /**
@@ -32,10 +32,11 @@ GM.Renderer = new function () {
             devicePixelRatio: me.config.devicePixelRatio
         });
         me.renderer.shadowMapEnabled = me.config.shadowMapEnabled;
-        me.renderer.setClearColor(me.config.setClearColor, 1);
+        me.renderer.setClearColor(me.config.clearColor, 1);
         if (me.config.softShadows) {
             me.renderer.shadowMapType = THREE.PCFSoftShadowMap;
         }
+        document.body.appendChild(me.renderer.domElement);
     };
 
     /**
@@ -51,8 +52,8 @@ GM.Renderer = new function () {
             height = window.innerHeight;
             width = (height / 9) * 16;
         }
-        GM.Canvas.node.style.width = width + "px";
-        GM.Canvas.node.style.height = height + "px";
+        me.renderer.domElement.style.width = width + "px";
+        me.renderer.domElement.style.height = height + "px";
         me.renderer.setSize(width, height);
         GM.Camera.camera.updateProjectionMatrix();
         me.render();

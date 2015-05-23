@@ -62,5 +62,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask("default", ["uglify", "concat_deps", "jsdoc"]);
     grunt.registerTask("dist", ["uglify", "concat_deps"]);
+    grunt.registerTask("ugly", ["uglify"]);
     grunt.registerTask("doc", ["jsdoc"]);
 };
