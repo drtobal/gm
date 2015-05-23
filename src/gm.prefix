@@ -1,7 +1,5 @@
 /**
-* @author       Richard Davey <cristobal@cirstobaldiaz.cl>
+* @author       Cirstóbal Díaz <cristobal@cirstobaldiaz.cl>
 */
 
 (function(){
-
-    var root = this;

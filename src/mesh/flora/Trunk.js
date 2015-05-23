@@ -1,4 +1,15 @@
+/**
+ * Crea un tronco
+ * @memberOf Mesh.Flora.Trunk
+ * @class Trunk
+ */
 Mesh.Flora.Trunk = new function () {
+    /**
+     * Crea un tronco base
+     * @method GM.Flora.Trunk.base
+     * @param {THREE.Geometry} geometry geometría del objeto
+     * @returns {THREE.Mesh}
+     */
     this.base = function (geometry) {
         /*             6
          *1  ------ ---
@@ -22,6 +33,13 @@ Mesh.Flora.Trunk = new function () {
         mesh.castShadow = true;
         return mesh;
     };
+    
+    /**
+     * Crea un tronco vertical
+     * @method GM.Flora.Trunk.vertical
+     * @param {THREE.Geometry} geometry geometría del objeto
+     * @returns {THREE.Mesh}
+     */
     this.vertical = function (geometry) {
         var mesh = this.base(geometry);
 
@@ -53,6 +71,13 @@ Mesh.Flora.Trunk = new function () {
 
         return mesh;
     };
+    
+    /**
+     * Crea un tronco horizontal
+     * @method GM.Flora.Trunk.horizontal
+     * @param {THREE.Geometry} geometry geometría del objeto
+     * @returns {THREE.Mesh}
+     */
     this.horizontal = function (geometry) {
         var mesh = this.base(geometry);
         var l = (1 / 6) * 5;

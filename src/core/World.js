@@ -13,6 +13,7 @@ GM.World = new function () {
     
     /**
      * Función llama en GM.start para crear el mundo
+     * @method GM.World.create
      * @param {THREE.Scene} scene insertado por GM
      * @returns {undefined}
      */

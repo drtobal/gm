@@ -5,7 +5,7 @@
  * requiere los siguientes paquetes de grunt:
  * npm install grunt grunt-contrib-uglify --save-dev
  * npm install grunt-concat-deps --save-dev
- * npm install grunt-jsdoc@beta --save-dev
+ * npm install grunt-jsdoc --save-dev
  */
 
 module.exports = function (grunt) {
@@ -13,19 +13,10 @@ module.exports = function (grunt) {
     var archivos = [
         "src/utils/*.js",
         "src/gm.js",
-        "src/*.js",
-        "src/*/*.js",
-        "src/*/*/*.js",
-    ];
-
-    var archivosB = [
-        "src/gm.prefix",
-        "src/utils/*.js",
-        "src/gm.js",
-        "src/*.js",
-        "src/*/*.js",
-        "src/*/*/*.js",
-        "src/gm.suffix",
+        "src/core/**/*.js",
+        "src/mesh/Mesh.js",
+        "src/mesh/Mesh/flora/Trunk.js",
+        "src/mesh/**/*.js",
     ];
 
     grunt.initConfig({
@@ -35,7 +26,7 @@ module.exports = function (grunt) {
                     sourceMap: true,
                     sourceMapName: "dist/gm.min.map",
                     banner: "(function(){\nvar root = this;\n",
-                    footer: "}).call(this);",
+                    footer: "\n}).call(this);",
                 },
                 files: {
                     "dist/gm.min.js": archivos,
@@ -47,15 +38,17 @@ module.exports = function (grunt) {
                 options: {
                     separator: "\n\n",
                     out: "dist/gm.js",
+                    intro: "src/gm.prefix",
+                    outro: "src/gm.suffix",
                 },
                 files: {
-                    src: archivosB,
+                    src: archivos,
                 }
             }
         },
         jsdoc: {
             dist: {
-                src: archivosB,
+                src: archivos,
                 options: {
                     destination: 'doc',
                 },

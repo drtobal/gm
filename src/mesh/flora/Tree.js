@@ -1,6 +1,12 @@
+/**
+ * Crea un árbol
+ * @memberOf GM.Flora.Tree
+ * @class Tree
+ * @constructor
+ */
 Mesh.Flora.Tree = function () {
     var mesh = new THREE.Object3D();
-    var trunk = meshes.flora.trunk.vertical(new THREE.BoxGeometry(10, 50, 10));
+    var trunk = Mesh.Flora.Trunk.vertical(new THREE.BoxGeometry(10, 50, 10));
 
     var textures = [
         THREE.ImageUtils.loadTexture('src/textures/flora/leaves.png'),
