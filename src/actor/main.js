@@ -8,19 +8,30 @@ Actor.Main = function () {
 
     var me = this;
 
+    /**
+     * @property {boolean} jumping el actor está o no saltando
+     * @property {object} onTheWay objeto para dirigirse a algún lugar definido por la aplicación
+     */
+
     this.jumping = true;
-    this.limitJumping = 0;
+    //this.limitJumping = 0;
     this.onTheWay = {
         value: false,
-        objetive: new THREE.Vector3()
+        objetive: new THREE.Vector3(),
     };
+    /*
+     * Colección de Raycaster para detectar colisiones con objetos de {GM.World.colliders}
+     */
     var rays = {
         front: new THREE.Raycaster(),
         bottom: new THREE.Raycaster(),
         left: new THREE.Raycaster(),
-        right: new THREE.Raycaster()
+        right: new THREE.Raycaster(),
     };
 
+    /*
+     * Abstracción de las teclas de control del teclado al actor
+     */
     var keys = {
         letft: 0,
         right: 0,
@@ -33,11 +44,15 @@ Actor.Main = function () {
                     this.right === 1 ||
                     this.backward === 1) {
                 this.any = true;
-            } else
+            } else {
                 this.any = false;
+            }
         }
     };
 
+    /*
+     * Anima las extremidades del mesh al trasladar, rotar o estar quieto
+     */
     var animate = {
         walk: function () {
             var x = (30 * Math.sin((new Date()).valueOf() / 50)) * (Math.PI / 180);
@@ -60,11 +75,20 @@ Actor.Main = function () {
     GM.beforeRender.add("mainActorRender", render);
     GM.Camera.camera.lookAt(actor.mesh.position);
 
+    /**
+     * prepara un punto objetivo para luego dirigirse hacia dicho objetivo
+     * @method Actor.Main.setObjetive
+     * @param {THREE.Vector3} point punto objetivo para definir
+     */
     this.setObjetive = function (point) {
         me.onTheWay.value = true;
         me.onTheWay.objetive = point;
     };
 
+    /**
+     * Se dirige al objetivo definido por {Actor.Main.setObjetive}
+     * @method Actor.Main.goToObjetive
+     */
     this.goToObjetive = function () {
         if (Math.sqrt(Math.pow(actor.mesh.position.x - me.onTheWay.objetive.x, 2) + Math.pow(actor.mesh.position.z - me.onTheWay.objetive.z, 2)) > 3) {
             var point = me.onTheWay.objetive;
@@ -94,15 +118,20 @@ Actor.Main = function () {
         }
     };
 
+    /*
+     * función a ejecutar en el ciclo de renderizado
+     */
     function render() {
         var oldPos = actor.mesh.position.clone();
 
         if (collideWithGround()) {
-            if (!me.jumping && keys.space === 1)
+            if (!me.jumping && keys.space === 1) {
                 jump();
+            }
         } else {
-            if (!me.jumping)
+            if (!me.jumping) {
                 actor.mesh.position.y -= (Math.pow(Math.abs(actor.mesh.position.y), .2));
+            }
         }
 
         if (keys.any) {
@@ -126,6 +155,9 @@ Actor.Main = function () {
             actor.mesh.position.z]);
     }
 
+    /*
+     * función para comenzar un salto
+     */
     function jump() {
         me.jumping = true;
         var pos = actor.mesh.position.clone();
@@ -141,6 +173,9 @@ Actor.Main = function () {
         tween.start();
     }
 
+    /*
+     * fnción que detecta colisiones con objetos pertenecientes a {GM.World.colliders}
+     */
     function collide() {
         var vectorLeft = new THREE.Vector3(1, 0, 0);
         vectorLeft.applyAxisAngle(new THREE.Vector3(0, 1, 0), actor.mesh.rotation.y);
@@ -163,18 +198,26 @@ Actor.Main = function () {
         return collisions.length > 0 && collisions[0].distance <= 4;
     }
 
+    /*
+     * función que detecta una colisión contra un objeto de {GM.World.colliders} que se encuentre
+     * debajo del mesh del actor, en este caso inractúa con el estado de salto del actor
+     */
     function collideWithGround() {
         rays.bottom.set(actor.mesh.position, new THREE.Vector3(0, -1, 0));
         var collisions = rays.bottom.intersectObjects(GM.World.colliders, true);
         if (collisions.length > 0 && collisions[0].distance <= 6.5) {
             if (6.5 - collisions[0].distance >= 2)
                 actor.mesh.position.y += 6.5 - collisions[0].distance;
-            this.jumping = false;
+            me.jumping = false;
             return true;
         }
         return false;
     }
 
+    /*
+     * función para trasladar y rotar al actor en el espacio dependiendo de la tecla
+     * presionada
+     */
     function move() {
         var colliding = collide();
 
@@ -212,6 +255,9 @@ Actor.Main = function () {
         }
     }
 
+    /*
+     * instancia los eventos de keydown y keyup para controlar al actor
+     */
     function controller() {
         window.addEventListener("keydown", function (event) {
             if (event.keyCode === 65 || event.keyCode === 37)//a - left

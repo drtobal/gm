@@ -4,7 +4,7 @@
  * Requiere
  * Three.js
  * OrbitControls.js
- * Tween.js
+ * Tween.js https://github.com/tweenjs/tween.js
  * 
  * @author Cristóbal Díaz Álvarez <http://www.cristobaldiazalvarez.cl>
  * @class GM
@@ -46,7 +46,7 @@ var GM = new function () {
         });
 
         me.Mesh = Mesh;
-        me.World.create(me.scene, Mesh);
+        me.World.create(me.scene);
         
         me.mainActor = new Actor.Main();
 

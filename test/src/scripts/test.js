@@ -2,7 +2,7 @@ window.onload = function () {
     Gm.World.createWorld = createWorld;
     Gm.start();
 
-    function createWorld(scene) {
+    function createWorld(world, scene) {
         //*************************
         //WORLD
         //*************************
@@ -45,18 +45,19 @@ window.onload = function () {
         ground.position.y = -5;
         //ground.receiveShadow = true;
         scene.add(ground);
-        //app.colliders.push(ground);
+        world.colliders.push(ground);
 
         var trunk = Gm.Mesh.Flora.Trunk.horizontal(new THREE.BoxGeometry(50, 10, 10));
         trunk.position.z = -30;
         trunk.position.y = 5;
         scene.add(trunk);
-        //app.colliders.push(trunk);
+        world.colliders.push(trunk);
 
         var tree = Gm.Mesh.Flora.Tree();
         tree.position.z = 80;
         tree.position.y = 25;
         scene.add(tree);
+        world.colliders.push(tree);
 
         //*************************
         //LIGHTS

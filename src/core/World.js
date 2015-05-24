@@ -20,6 +20,6 @@ GM.World = new function () {
      * @returns {undefined}
      */
     this.create = function (scene) {
-        this.createWorld(scene);
+        this.createWorld(this, scene);
     };
 };

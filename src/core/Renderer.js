@@ -64,6 +64,7 @@ GM.Renderer = new function () {
      * @method GM.Renderer.render
      */
     this.render = function () {
+        TWEEN.update();
         GM.beforeRender.getCollection().forEach(function (item) {
             item.value();
         });
