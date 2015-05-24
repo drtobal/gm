@@ -8,6 +8,6 @@ var Control = new function () {
     this.Mouse = GM.blank;
     
     this.build = function () {
-        this.Mouse = new this.Mouse();
+        this.Mouse.build();
     };
 };

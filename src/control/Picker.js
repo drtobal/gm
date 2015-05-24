@@ -26,7 +26,7 @@ Control.Picker = function (args) {
     this.removeOnPick = args.removeOnPick || true;
     this.autoAdd = args.autoAdd || true;
 
-    if (!(this.mesh instanceof TRHEE.Mesh)) {
+    if (!(this.mesh instanceof THREE.Mesh)) {
         throw "Debe definir Mesh como una instancia de THREE.Mesh";
     }
 

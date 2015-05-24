@@ -43,19 +43,20 @@ var GM = new function () {
         me.Renderer.build();
         me.Camera.build();
         me.Frame.build();
+        Control.build();
+
+        me.Mesh = Mesh;
+        me.Control = Control;
+        me.World.create(me.scene);
+        
+        me.mainActor = new Actor.Main();
 
         me.beforeStart.getCollection().forEach(function (item) {
             item.value();
         });
 
-        me.Mesh = Mesh;
-        me.World.create(me.scene);
-        
-        me.mainActor = new Actor.Main();
-        Control.build();
-
         me.Renderer.onWindowResize();
-        window.addEventListener('resize', me.Renderer.onWindowResize, false);
+        window.addEventListener("resize", me.Renderer.onWindowResize, false);
 
         requestAnimFrame(function animate() {
             requestAnimationFrame(animate);
@@ -67,8 +68,8 @@ var GM = new function () {
 
 };
 
-if (typeof THREE === 'undefined') {
-    throw new Error('GM requiere Three.js')
+if (typeof THREE === "undefined") {
+    throw new Error("GM requiere Three.js")
 }
 
 Gm = GM;

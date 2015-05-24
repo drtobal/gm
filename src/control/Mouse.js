@@ -4,7 +4,7 @@
  * @memberOf Control
  * @constructor
  */
-Control.Mouse = function () {
+Control.Mouse = new function () {
 
     var me = this;
 
@@ -22,12 +22,18 @@ Control.Mouse = function () {
      */
     var shoot = function (event) {
         if (GM.Camera.camera instanceof THREE.OrthographicCamera) {
-            me.vector.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, -1); // z = - 1 important!
+            me.vector.set(
+                    (event.offsetX / GM.Renderer.renderer.domElement.width) * 2 - 1,
+                    -(event.offsetY / GM.Renderer.renderer.domElement.height) * 2 + 1,
+                    -1); // z = - 1 important!
             me.vector.unproject(GM.Camera.camera);
             me.dir.set(0, 0, -1).transformDirection(GM.Camera.camera.matrixWorld);
             me.ray.set(me.vector, me.dir);
         } else if (GM.Camera.camera instanceof THREE.PerspectiveCamera) {
-            me.vector.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5); // z = 0.5 important!
+            me.vector.set(
+                    (event.offsetX / GM.Renderer.renderer.domElement.width) * 2 - 1,
+                    -(event.offsetY / GM.Renderer.renderer.domElement.height) * 2 + 1,
+                    0.5); // z = 0.5 important!
             me.vector.unproject(GM.Camera.camera);
             me.ray.set(GM.Camera.camera.position, me.vector.sub(GM.Camera.camera.position).normalize());
         }
@@ -56,66 +62,73 @@ Control.Mouse = function () {
         return me.ray;
     };
 
-    document.addEventListener("mousemove", mouseMove, false);
-
-    GM.beforeRender.add("pickerCtrl", picker);
-
-    /*
-     * controla los objetos que al ser asidos, ya no pueden ser asidos nuevamente
+    /**
+     * Construye el funcionamiento del mouse
+     * @method Control.Mouse.build
      */
-    function picker() {
-        var id = new Date().valueOf().toString();
-        for (var x in GM.World.pickers) {
-            var picker = GM.World.pickers[x];
-            var actor = GM.mainActor.actor.mesh;
-            var distance = Math.sqrt(
-                    Math.pow(actor.position.x - picker.mesh.position.x, 2) +
-                    Math.pow(actor.position.y - picker.mesh.position.y, 2) +
-                    Math.pow(actor.position.z - picker.mesh.position.z, 2));
-            if (distance < 10) {
-                picker.onPick();
+    this.build = function () {
+        GM.Renderer.renderer.domElement.addEventListener("mousemove", mouseMove, false);
 
-                /*
-                 * Animación de desaparecer y retiro de [GM.World.pickers]{@link GM.World}
-                 */
-                if (picker.removeOnPick) {
-                    GM.World.pickers.splice(x, 1);
+        GM.beforeRender.add("pickerCtrl", picker);
 
-                    GM.beforeRender.add(id, function () {
-                        picker.mesh.scale.x -= .1;
-                        picker.mesh.scale.y -= .1;
-                        picker.mesh.scale.z -= .1;
-                        var pos = actor.position.clone();
-                        picker.mesh.position.x += (pos.x - picker.mesh.position.x) / 4;
-                        picker.mesh.position.y += (pos.y - picker.mesh.position.y) / 4;
-                        picker.mesh.position.z += (pos.z - picker.mesh.position.z) / 4;
-                        if (picker.mesh.scale.x <= 0) {
-                            delete picker;
-                            GM.World.Scene.scene.remove(picker.mesh);
-                            GM.beforeRender.remove(id);
-                        }
-                    });
+        /*
+         * controla los objetos que al ser asidos, ya no pueden ser asidos nuevamente
+         */
+        function picker() {
+            var id = new Date().valueOf().toString();
+            for (var x in GM.World.pickers) {
+                var picker = GM.World.pickers[x];
+                var actor = GM.mainActor.actor.mesh;
+                var distance = Math.sqrt(
+                        Math.pow(actor.position.x - picker.mesh.position.x, 2) +
+                        Math.pow(actor.position.y - picker.mesh.position.y, 2) +
+                        Math.pow(actor.position.z - picker.mesh.position.z, 2));
+                if (distance < 10) {
+                    picker.onPick();
+
+                    /*
+                     * Animación de desaparecer y retiro de [GM.World.pickers]{@link GM.World}
+                     */
+                    if (picker.removeOnPick) {
+                        GM.World.pickers.splice(x, 1);
+
+                        GM.beforeRender.add(id, function () {
+                            picker.mesh.scale.x -= .1;
+                            picker.mesh.scale.y -= .1;
+                            picker.mesh.scale.z -= .1;
+                            var pos = actor.position.clone();
+                            picker.mesh.position.x += (pos.x - picker.mesh.position.x) / 4;
+                            picker.mesh.position.y += (pos.y - picker.mesh.position.y) / 4;
+                            picker.mesh.position.z += (pos.z - picker.mesh.position.z) / 4;
+                            if (picker.mesh.scale.x <= 0) {
+                                delete picker;
+                                GM.scene.remove(picker.mesh);
+                                GM.beforeRender.remove(id);
+                            }
+                        });
+                    }
                 }
             }
         }
-    }
 
-    /*
-     * detecta si existe algún objeto bajo el mouse que pueda interactuar para
-     * cambiar el estilo de cursor entre pointer y default
-     */
-    function mouseMove(event) {
-        var ray = me.getRay(event);
-        var intersect = new Array();
-        for (var x in GM.World.pickers) {
-            intersect = ray.intersectObject(GM.World.pickers[x].mesh);
-            if (intersect.length > 0)
-                break;
+        /*
+         * detecta si existe algún objeto bajo el mouse que pueda interactuar para
+         * cambiar el estilo de cursor entre pointer y default
+         */
+        function mouseMove(event) {
+            var ray = me.getRay(event);
+            var intersect = new Array();
+            for (var x in GM.World.pickers) {
+                intersect = ray.intersectObject(GM.World.pickers[x].mesh);
+                if (intersect.length > 0) {
+                    break;
+                }
+            }
+            if (intersect.length > 0) {
+                document.body.style.cursor = "pointer";
+            } else {
+                document.body.style.cursor = "default";
+            }
         }
-        if (intersect.length > 0) {
-            document.body.style.cursor = "pointer";
-        } else {
-            document.body.style.cursor = "default";
-        }
-    }
+    };
 };
