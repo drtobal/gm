@@ -15,7 +15,7 @@ GM.Frame = new function () {
         window.requestAnimFrame = requestAnimFrame();
     };
 
-    /**
+    /*
      * obtiene el tipo de animación disponible para el bucle de renderizado
      * @method GM.Frame.requestAnimFrame
      * @return {function} el tipo de animación disponible

@@ -6,6 +6,7 @@
  * npm install grunt grunt-contrib-uglify --save-dev
  * npm install grunt-concat-deps --save-dev
  * npm install grunt-jsdoc --save-dev
+ * npm install --save-dev minami    // template para JSDoc
  */
 
 module.exports = function (grunt) {
@@ -53,7 +54,8 @@ module.exports = function (grunt) {
             dist: {
                 src: archivos,
                 options: {
-                    destination: 'doc',
+                    destination: "doc",
+                    "template": "node_modules/minami"
                 },
             }
         }
