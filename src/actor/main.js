@@ -10,12 +10,14 @@ Actor.Main = function () {
 
     /**
      * @property {boolean} jumping el actor está o no saltando
-     * @property {object} onTheWay objeto para dirigirse a algún lugar definido por la aplicación
      */
 
     this.jumping = true;
     //this.limitJumping = 0;
-    this.onTheWay = {
+    /*
+     * objeto para dirigirse a algún lugar definido por la aplicación
+     */
+    var onTheWay = {
         value: false,
         objetive: new THREE.Vector3(),
     };
@@ -81,8 +83,8 @@ Actor.Main = function () {
      * @param {THREE.Vector3} point punto objetivo para definir
      */
     this.setObjetive = function (point) {
-        me.onTheWay.value = true;
-        me.onTheWay.objetive = point;
+        onTheWay.value = true;
+        onTheWay.objetive = point;
     };
 
     /**
@@ -90,8 +92,8 @@ Actor.Main = function () {
      * @method Actor.Main.goToObjetive
      */
     this.goToObjetive = function () {
-        if (Math.sqrt(Math.pow(actor.mesh.position.x - me.onTheWay.objetive.x, 2) + Math.pow(actor.mesh.position.z - me.onTheWay.objetive.z, 2)) > 3) {
-            var point = me.onTheWay.objetive;
+        if (Math.sqrt(Math.pow(actor.mesh.position.x - onTheWay.objetive.x, 2) + Math.pow(actor.mesh.position.z - onTheWay.objetive.z, 2)) > 3) {
+            var point = onTheWay.objetive;
             var angle = Math.atan2(point.x - actor.mesh.position.x, point.z - actor.mesh.position.z);
             var rot = actor.mesh.rotation.y;
             var diff = angle - rot;
@@ -113,7 +115,7 @@ Actor.Main = function () {
             } else
                 animate.stand();
         } else {
-            me.onTheWay.value = false;
+            onTheWay.value = false;
             animate.stand();
         }
     };
@@ -135,10 +137,10 @@ Actor.Main = function () {
         }
 
         if (keys.any) {
-            me.onTheWay.value = false;
+            onTheWay.value = false;
             move();
         } else {
-            if (me.onTheWay.value)
+            if (onTheWay.value)
                 me.goToObjetive();
             else
                 animate.stand();

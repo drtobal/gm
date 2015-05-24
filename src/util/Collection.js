@@ -10,8 +10,7 @@ Util.Collection = function () {
 
     /**
      * Agrega un objeto a la colección
-     * @method Collection.add
-     * @memberOf Util.Collection
+     * @method Util.Collection.add
      * @param {string} key identificador del objeto, null para autogenerar
      * @param {type} value objeto que se quiere agregar
      * @returns {object} objeto que se ha agregado a la colección
@@ -30,8 +29,7 @@ Util.Collection = function () {
 
     /**
      * Retorna el array con la colección
-     * @method Collection.getCollection
-     * @memberOf Util.Collection
+     * @method Util.Collection.getCollection
      * @returns {Array|Collection.collection}
      */
     this.getCollection = function () {
