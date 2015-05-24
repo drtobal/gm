@@ -6,13 +6,18 @@
  */
 
 Mesh.Actor.Main = function () {
-    
+
     var me = this;
-    
+
+    /**
+     * @property {THREE.Mesh} mesh mesh que contiene las extremidades y cuerpo
+     * @property {THREE.Mesh} body mesh que contiene el cuerpo
+     */
     this.mesh;
     this.body;
-    
-    this.build = function () {
+
+    build();
+    function build() {
         var geometry = {
             hands: {
                 left: new THREE.BoxGeometry(2, 4, 2),
@@ -30,9 +35,9 @@ Mesh.Actor.Main = function () {
         geometry.foots.right.applyMatrix(new THREE.Matrix4().makeTranslation(0, -2, 0));
 
         var textures = {
-            head: THREE.ImageUtils.loadTexture('src/textures/actors/main/head.png'),
-            hand: THREE.ImageUtils.loadTexture('src/textures/actors/main/hand.png'),
-            foot: THREE.ImageUtils.loadTexture('src/textures/actors/main/foot.png')
+            head: THREE.ImageUtils.loadTexture("src/textures/actors/main/head.png"),
+            hand: THREE.ImageUtils.loadTexture("src/textures/actors/main/hand.png"),
+            foot: THREE.ImageUtils.loadTexture("src/textures/actors/main/foot.png")
         };
 
         textures.head.magFilter = THREE.NearestFilter;
@@ -94,5 +99,6 @@ Mesh.Actor.Main = function () {
         me.body.hands.left.castShadow = true;
         me.body.hands.right.receiveShadow = true;
         me.body.hands.right.castShadow = true;
-    };
+    }
+    ;
 };

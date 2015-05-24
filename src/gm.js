@@ -17,7 +17,8 @@ var GM = new function () {
     /**
      * @property {THREE.Scene} scene Objeto con la scena de Three.js
      * @property {Object} config Define configuraciones generales de la aplicación
-     * @property {Collection} beforeStart colección de funciones que se ejecutan antes de comenzar la aplicación
+     * @property {Util.Collection} beforeStart colección de funciones que se ejecutan antes de comenzar la aplicación
+     * @property {Util.Collection} beforeRender colección de funciones que se ejecutan antes de cada ciclo de renderizado
      * @property {function} blank función vacía 
      */
     this.scene = null;
@@ -25,6 +26,7 @@ var GM = new function () {
         debug: false
     };
     this.beforeStart = new Util.Collection();
+    this.beforeRender = new Util.Collection();
     this.blank = function () {
     };
 
@@ -44,6 +46,8 @@ var GM = new function () {
 
         me.Mesh = Mesh;
         me.World.create(me.scene, Mesh);
+        
+        me.mainActor = new Actor.Main();
 
         me.Renderer.onWindowResize();
         window.addEventListener('resize', me.Renderer.onWindowResize, false);

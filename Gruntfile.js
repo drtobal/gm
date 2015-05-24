@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         "src/mesh/Mesh.js",
         "src/mesh/Mesh/flora/Trunk.js",
         "src/mesh/**/*.js",
+        "src/Actor/*.js",
     ];
 
     grunt.initConfig({

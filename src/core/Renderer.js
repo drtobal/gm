@@ -64,6 +64,9 @@ GM.Renderer = new function () {
      * @method GM.Renderer.render
      */
     this.render = function () {
+        GM.beforeRender.getCollection().forEach(function (item) {
+            item.value();
+        });
         me.renderer.render(GM.scene, GM.Camera.camera);
     };
 };
