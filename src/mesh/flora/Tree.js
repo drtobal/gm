@@ -1,6 +1,6 @@
 /**
  * Crea un árbol
- * @memberOf GM.Flora
+ * @memberOf Mesh.Flora
  * @class Tree
  * @constructor
  */

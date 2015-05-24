@@ -24,7 +24,7 @@ var GM = new function () {
     this.config = {
         debug: false
     };
-    this.beforeStart = new Collection();
+    this.beforeStart = new Util.Collection();
     this.blank = function () {
     };
 

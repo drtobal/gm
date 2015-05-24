@@ -11,7 +11,9 @@
 module.exports = function (grunt) {
 
     var archivos = [
-        "src/utils/*.js",
+        "src/util/Util.js",
+        "src/util/Object.js",
+        "src/util/**/*.js",
         "src/gm.js",
         "src/core/**/*.js",
         "src/mesh/Mesh.js",
@@ -25,7 +27,7 @@ module.exports = function (grunt) {
                 options: {
                     sourceMap: true,
                     sourceMapName: "dist/gm.min.map",
-                    banner: "(function(){\nvar root = this;\n",
+                    banner: "(function(){",
                     footer: "\n}).call(this);",
                 },
                 files: {

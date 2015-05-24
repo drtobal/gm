@@ -3,6 +3,7 @@
  * requiere solamente de un contenedor
  * @memberOf GM
  * @class Canvas
+ * @deprecated se marca deprecado por que el contendor canvas ha sido trasladado a GM.Renderer.renderer.domElement
  */
 
 GM.Canvas = new function () {
