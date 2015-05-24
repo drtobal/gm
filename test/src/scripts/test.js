@@ -90,5 +90,24 @@ window.onload = function () {
         dirLight.shadowCameraFar = 3500;
         dirLight.shadowBias = -0.0001;
         dirLight.shadowDarkness = 0.35;
+
+        //*************************
+        //PICKERS
+        //*************************
+
+        var greenMesh = new THREE.Mesh(new THREE.BoxGeometry(5, 5, 5),
+                new THREE.MeshLambertMaterial({
+                    color: new THREE.Color(0, 1, 0)
+                }));
+        greenMesh.position.z = 30;
+        greenMesh.position.y = 2.5;
+
+        Gm.scene.add(greenMesh);
+        var picker = new Gm.Control.Picker({
+            mesh: greenMesh,
+            onPick: function () {
+                console.log("picked");
+            }
+        });
     }
 };
