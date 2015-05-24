@@ -9,8 +9,8 @@ Util.Mesh = new function () {
      * Realiza un mapa de un ortoedro o cubo para su texturizado, este método no retorna un objeto ya que se
      * modifica directamente la instancia de argumento
      * @method Util.Mesh.cuboidMap
-     * @param {object} args objeto a modificiar, se debe establecer la propiedad
-     * geometry THREE.BoxGeometry
+     * @param {Object} args objeto a modificiar
+     * @param {THREE.BoxGeometry} args.geometry geometría del objeto
      */
     this.cuboidMap = function (args) {
         /*

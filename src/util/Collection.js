@@ -11,9 +11,9 @@ Util.Collection = function () {
     /**
      * Agrega un objeto a la colección
      * @method Util.Collection.add
-     * @param {string} key identificador del objeto, null para autogenerar
+     * @param {String} key identificador del objeto, null para autogenerar
      * @param {type} value objeto que se quiere agregar
-     * @returns {object} objeto que se ha agregado a la colección
+     * @returns {Object} objeto que se ha agregado a la colección
      */
     this.add = function (key, value) {
         if (typeof key !== "string") {

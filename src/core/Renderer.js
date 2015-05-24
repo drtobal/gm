@@ -9,7 +9,13 @@ GM.Renderer = new function () {
 
     /**
      * @property {THREE.WebGLRenderer} renderer objeto de renderizado principal de la aplicación
-     * @property {object} config Configuración para renderer
+     * @property {Object} config Configuración para renderer
+     * @property {boolean} config.shadowMapEnabled habilita sombres en la escena
+     * @property {boolean} config.antialias habilita antialisado
+     * @property {boolean} config.alpha canal alfa para la escena, para las transparencias
+     * @property {number} config.devicePixelRatio radio de pixeles en el contenedor canvas
+     * @property {THREE.Color} config.clearColor color del fondo de la escena
+     * @property {boolean} config.softShadows suavizado de las sombras
      */
     this.renderer;
     this.config = {

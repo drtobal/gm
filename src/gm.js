@@ -18,6 +18,7 @@ var GM = new function () {
     /**
      * @property {THREE.Scene} scene Objeto con la scena de Three.js
      * @property {Object} config Define configuraciones generales de la aplicación
+     * @property {boolean} config.debug se muestra la aplicación en modo debug
      * @property {Util.Collection} beforeStart colección de funciones que se ejecutan antes de comenzar la aplicación
      * @property {Util.Collection} beforeRender colección de funciones que se ejecutan antes de cada ciclo de renderizado
      * @property {function} blank función vacía 
