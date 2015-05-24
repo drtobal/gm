@@ -5,7 +5,6 @@
  * @constructor
  */
 Util.Collection = function () {
-    var me = this;
     var collection = new Array();
 
     /**
@@ -34,5 +33,18 @@ Util.Collection = function () {
      */
     this.getCollection = function () {
         return collection;
+    };
+
+    /**
+     * retira un objeto de la colección
+     * @method Util.Collection.revove
+     * @param {String} key key del objeto a remover
+     */
+    this.remove = function (key) {
+        for (var x in collection) {
+            if (collection[x].key === key) {
+                collection.splice(x, 1);
+            }
+        }
     };
 };

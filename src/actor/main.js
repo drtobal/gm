@@ -58,24 +58,24 @@ Actor.Main = function () {
     var animate = {
         walk: function () {
             var x = (30 * Math.sin((new Date()).valueOf() / 50)) * (Math.PI / 180);
-            actor.body.hands.left.rotation.x = x;
-            actor.body.hands.right.rotation.x = -x;
-            actor.body.foots.left.rotation.x = -x;
-            actor.body.foots.right.rotation.x = x;
+            me.actor.body.hands.left.rotation.x = x;
+            me.actor.body.hands.right.rotation.x = -x;
+            me.actor.body.foots.left.rotation.x = -x;
+            me.actor.body.foots.right.rotation.x = x;
         },
         stand: function () {
-            actor.body.hands.left.rotation.x = 0;
-            actor.body.hands.right.rotation.x = 0;
-            actor.body.foots.left.rotation.x = 0;
-            actor.body.foots.right.rotation.x = 0;
+            me.actor.body.hands.left.rotation.x = 0;
+            me.actor.body.hands.right.rotation.x = 0;
+            me.actor.body.foots.left.rotation.x = 0;
+            me.actor.body.foots.right.rotation.x = 0;
         }
     };
 
-    var actor = new Mesh.Actor.Main();
-    GM.scene.add(actor.mesh);
+    this.actor = new Mesh.Actor.Main();
+    GM.scene.add(me.actor.mesh);
     controller();
     GM.beforeRender.add("mainActorRender", render);
-    GM.Camera.camera.lookAt(actor.mesh.position);
+    GM.Camera.camera.lookAt(me.actor.mesh.position);
 
     /**
      * prepara un punto objetivo para luego dirigirse hacia dicho objetivo
@@ -92,10 +92,10 @@ Actor.Main = function () {
      * @method Actor.Main.goToObjetive
      */
     this.goToObjetive = function () {
-        if (Math.sqrt(Math.pow(actor.mesh.position.x - onTheWay.objetive.x, 2) + Math.pow(actor.mesh.position.z - onTheWay.objetive.z, 2)) > 3) {
+        if (Math.sqrt(Math.pow(me.actor.mesh.position.x - onTheWay.objetive.x, 2) + Math.pow(me.actor.mesh.position.z - onTheWay.objetive.z, 2)) > 3) {
             var point = onTheWay.objetive;
-            var angle = Math.atan2(point.x - actor.mesh.position.x, point.z - actor.mesh.position.z);
-            var rot = actor.mesh.rotation.y;
+            var angle = Math.atan2(point.x - me.actor.mesh.position.x, point.z - me.actor.mesh.position.z);
+            var rot = me.actor.mesh.rotation.y;
             var diff = angle - rot;
 
             if (Math.abs(diff) > Math.PI) {
@@ -107,10 +107,10 @@ Actor.Main = function () {
             }
             if (diff !== 0)
                 rot += diff / 4;
-            actor.mesh.rotation.set(0, rot, 0);
+            me.actor.mesh.rotation.set(0, rot, 0);
             if (!collide()) {
-                actor.mesh.position.x += Math.sin(actor.mesh.rotation.y);
-                actor.mesh.position.z += Math.cos(actor.mesh.rotation.y);
+                me.actor.mesh.position.x += Math.sin(me.actor.mesh.rotation.y);
+                me.actor.mesh.position.z += Math.cos(me.actor.mesh.rotation.y);
                 animate.walk();
             } else
                 animate.stand();
@@ -124,7 +124,7 @@ Actor.Main = function () {
      * función a ejecutar en el ciclo de renderizado
      */
     function render() {
-        var oldPos = actor.mesh.position.clone();
+        var oldPos = me.actor.mesh.position.clone();
 
         if (collideWithGround()) {
             if (!me.jumping && keys.space === 1) {
@@ -132,7 +132,7 @@ Actor.Main = function () {
             }
         } else {
             if (!me.jumping) {
-                actor.mesh.position.y -= (Math.pow(Math.abs(actor.mesh.position.y), .2));
+                me.actor.mesh.position.y -= (Math.pow(Math.abs(me.actor.mesh.position.y), .2));
             }
         }
 
@@ -146,15 +146,15 @@ Actor.Main = function () {
                 animate.stand();
         }
 
-        GM.Camera.camera.position.x += actor.mesh.position.x - oldPos.x;
-        GM.Camera.camera.position.y += actor.mesh.position.y - oldPos.y;
-        GM.Camera.camera.position.z += actor.mesh.position.z - oldPos.z;
+        GM.Camera.camera.position.x += me.actor.mesh.position.x - oldPos.x;
+        GM.Camera.camera.position.y += me.actor.mesh.position.y - oldPos.y;
+        GM.Camera.camera.position.z += me.actor.mesh.position.z - oldPos.z;
 
-        GM.Camera.camera.lookAt(actor.mesh.position);
+        GM.Camera.camera.lookAt(me.actor.mesh.position);
         GM.Camera.controls.center.fromArray([
-            actor.mesh.position.x,
-            actor.mesh.position.y,
-            actor.mesh.position.z]);
+            me.actor.mesh.position.x,
+            me.actor.mesh.position.y,
+            me.actor.mesh.position.z]);
     }
 
     /*
@@ -162,12 +162,12 @@ Actor.Main = function () {
      */
     function jump() {
         me.jumping = true;
-        var pos = actor.mesh.position.clone();
+        var pos = me.actor.mesh.position.clone();
         var tween = new TWEEN.Tween(pos).to(new THREE.Vector3(0, pos.y + 25, 0), 400);
         tween.easing(TWEEN.Easing.Cubic.Out);
         tween.onUpdate(function () {
-            GM.Camera.camera.position.y += pos.y - actor.mesh.position.y;
-            actor.mesh.position.y = pos.y;
+            GM.Camera.camera.position.y += pos.y - me.actor.mesh.position.y;
+            me.actor.mesh.position.y = pos.y;
         });
         tween.onComplete(function () {
             me.jumping = false;
@@ -180,22 +180,22 @@ Actor.Main = function () {
      */
     function collide() {
         var vectorLeft = new THREE.Vector3(1, 0, 0);
-        vectorLeft.applyAxisAngle(new THREE.Vector3(0, 1, 0), actor.mesh.rotation.y);
-        rays.left.set(actor.mesh.position, vectorLeft);
+        vectorLeft.applyAxisAngle(new THREE.Vector3(0, 1, 0), me.actor.mesh.rotation.y);
+        rays.left.set(me.actor.mesh.position, vectorLeft);
         var collisionsLeft = rays.left.intersectObjects(GM.World.colliders, true);
         if (collisionsLeft.length > 0 && collisionsLeft[0].distance <= 5)
-            actor.mesh.translateX(-1);
+            me.actor.mesh.translateX(-1);
 
         var vectorRight = new THREE.Vector3(-1, 0, 0);
-        vectorRight.applyAxisAngle(new THREE.Vector3(0, 1, 0), actor.mesh.rotation.y);
-        rays.right.set(actor.mesh.position, vectorRight);
+        vectorRight.applyAxisAngle(new THREE.Vector3(0, 1, 0), me.actor.mesh.rotation.y);
+        rays.right.set(me.actor.mesh.position, vectorRight);
         var collisionsRight = rays.right.intersectObjects(GM.World.colliders, true);
         if (collisionsRight.length > 0 && collisionsRight[0].distance <= 5)
-            actor.mesh.translateX(1);
+            me.actor.mesh.translateX(1);
 
         var vector = new THREE.Vector3(0, 0, 1);
-        vector.applyAxisAngle(new THREE.Vector3(0, 1, 0), actor.mesh.rotation.y);
-        rays.front.set(actor.mesh.position, vector);
+        vector.applyAxisAngle(new THREE.Vector3(0, 1, 0), me.actor.mesh.rotation.y);
+        rays.front.set(me.actor.mesh.position, vector);
         var collisions = rays.front.intersectObjects(GM.World.colliders, true);
         return collisions.length > 0 && collisions[0].distance <= 4;
     }
@@ -205,11 +205,11 @@ Actor.Main = function () {
      * debajo del mesh del actor, en este caso inractúa con el estado de salto del actor
      */
     function collideWithGround() {
-        rays.bottom.set(actor.mesh.position, new THREE.Vector3(0, -1, 0));
+        rays.bottom.set(me.actor.mesh.position, new THREE.Vector3(0, -1, 0));
         var collisions = rays.bottom.intersectObjects(GM.World.colliders, true);
         if (collisions.length > 0 && collisions[0].distance <= 6.5) {
             if (6.5 - collisions[0].distance >= 2)
-                actor.mesh.position.y += 6.5 - collisions[0].distance;
+                me.actor.mesh.position.y += 6.5 - collisions[0].distance;
             me.jumping = false;
             return true;
         }
@@ -234,7 +234,7 @@ Actor.Main = function () {
             v.x = -1;
 
         var angle = GM.Camera.camera.rotation.y + Math.atan2(v.x, v.z);
-        var rot = actor.mesh.rotation.y;
+        var rot = me.actor.mesh.rotation.y;
         var diff = angle - rot;
 
         if (Math.abs(diff) > Math.PI) {
@@ -247,10 +247,10 @@ Actor.Main = function () {
         if (diff !== 0) {
             rot += diff / 4;
         }
-        actor.mesh.rotation.set(0, rot, 0);
+        me.actor.mesh.rotation.set(0, rot, 0);
         if (!colliding) {
-            actor.mesh.position.x += Math.sin(actor.mesh.rotation.y);
-            actor.mesh.position.z += Math.cos(actor.mesh.rotation.y);
+            me.actor.mesh.position.x += Math.sin(me.actor.mesh.rotation.y);
+            me.actor.mesh.position.z += Math.cos(me.actor.mesh.rotation.y);
             animate.walk();
         } else {
             animate.stand();

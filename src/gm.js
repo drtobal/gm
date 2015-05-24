@@ -50,6 +50,7 @@ var GM = new function () {
         me.World.create(me.scene);
         
         me.mainActor = new Actor.Main();
+        Control.build();
 
         me.Renderer.onWindowResize();
         window.addEventListener('resize', me.Renderer.onWindowResize, false);
