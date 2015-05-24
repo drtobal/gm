@@ -4,6 +4,7 @@
  * Requiere
  * Three.js
  * OrbitControls.js
+ * Tween.js
  * 
  * @author Cristóbal Díaz Álvarez <http://www.cristobaldiazalvarez.cl>
  * @class GM
