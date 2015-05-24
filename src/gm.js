@@ -17,6 +17,7 @@ var GM = new function () {
 
     /**
      * @property {THREE.Scene} scene Objeto con la scena de Three.js
+     * @property {boolean} started true si ha finalizado el proceso de inicio {GM.start}, false si no
      * @property {Object} config Define configuraciones generales de la aplicación
      * @property {boolean} config.debug se muestra la aplicación en modo debug
      * @property {Util.Collection} beforeStart colección de funciones que se ejecutan antes de comenzar la aplicación
@@ -24,6 +25,7 @@ var GM = new function () {
      * @property {function} blank función vacía 
      */
     this.scene = null;
+    this.started = false;
     this.config = {
         debug: false
     };
@@ -59,6 +61,8 @@ var GM = new function () {
             requestAnimationFrame(animate);
             me.Renderer.render();
         });
+        
+        me.started = true;
     };
 
 };

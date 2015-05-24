@@ -7,7 +7,7 @@
 Control.Mouse = function () {
 
     var me = this;
-    
+
     /**
      * @property {THREE.Vector3} vector utilizado para calcular la posición del mouse en la pantalla
      * @property {THREE.Raycaster} ray utilizado para detectar las colisiones del mouse con objetos de la escena
@@ -74,25 +74,28 @@ Control.Mouse = function () {
                     Math.pow(actor.position.z - picker.mesh.position.z, 2));
             if (distance < 10) {
                 picker.onPick();
-                GM.World.pickers.splice(x, 1);
 
                 /*
-                 * Animación de desaparecer
+                 * Animación de desaparecer y retiro de [GM.World.pickers]{@link GM.World}
                  */
-                GM.beforeRender.add(id, function () {
-                    picker.mesh.scale.x -= .1;
-                    picker.mesh.scale.y -= .1;
-                    picker.mesh.scale.z -= .1;
-                    var pos = actor.position.clone();
-                    picker.mesh.position.x += (pos.x - picker.mesh.position.x) / 4;
-                    picker.mesh.position.y += (pos.y - picker.mesh.position.y) / 4;
-                    picker.mesh.position.z += (pos.z - picker.mesh.position.z) / 4;
-                    if (picker.mesh.scale.x <= 0) {
-                        delete picker;
-                        GM.World.Scene.scene.remove(picker.mesh);
-                        GM.beforeRender.remove(id);
-                    }
-                });
+                if (picker.removeOnPick) {
+                    GM.World.pickers.splice(x, 1);
+
+                    GM.beforeRender.add(id, function () {
+                        picker.mesh.scale.x -= .1;
+                        picker.mesh.scale.y -= .1;
+                        picker.mesh.scale.z -= .1;
+                        var pos = actor.position.clone();
+                        picker.mesh.position.x += (pos.x - picker.mesh.position.x) / 4;
+                        picker.mesh.position.y += (pos.y - picker.mesh.position.y) / 4;
+                        picker.mesh.position.z += (pos.z - picker.mesh.position.z) / 4;
+                        if (picker.mesh.scale.x <= 0) {
+                            delete picker;
+                            GM.World.Scene.scene.remove(picker.mesh);
+                            GM.beforeRender.remove(id);
+                        }
+                    });
+                }
             }
         }
     }
