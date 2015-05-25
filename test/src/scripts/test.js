@@ -43,7 +43,7 @@ window.onload = function () {
         textures[5].repeat.set(30, 1);
 
         ground.position.y = -5;
-        //ground.receiveShadow = true;
+        ground.receiveShadow = true;
         scene.add(ground);
         world.colliders.push(ground);
 
